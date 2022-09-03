@@ -1,2 +1,2 @@
 def func(x):
-  print(x)
+    print(x)
