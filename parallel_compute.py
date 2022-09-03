@@ -7,7 +7,7 @@ def _dfunc(_cols):
     for _col in _cols:
         # IV结果
         sub_iv_dict[_col] = 0.0
-        # woe转换结果
+        # WOE转换结果
         sub_df_dict['woe_'+_col] = pd.Series([])
     
     return sub_iv_dict, sub_df_dict
