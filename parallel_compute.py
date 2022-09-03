@@ -5,13 +5,15 @@ def _dfunc(_cols):
     sub_df_dict = {}
     
     for _col in _cols:
+        # IV结果
         sub_iv_dict[_col] = 0.0
+        # 转换结果
         sub_df_dict['woe_'+_col] = pd.Series([])
     
     return sub_iv_dict, sub_df_dict
 
 
-## 对列并行计算
+## 对列并行计算 cols为列名list
 nwork = len(cols)//CPUS
 result = Parallel(n_jobs=CPUS)(
     delayed(_dfunc)(sub_cols) for sub_cols in [cols[i:i+nwork] for i in range(0, len(cols), nwork)]
