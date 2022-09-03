@@ -1,3 +1,9 @@
+import pandas as pd
+import numpy as np
+from tqdm import tqdm
+from joblib import Parallel, delayed
+
+
 ## 计算函数
 def _dfunc(_cols):
     ## processing ...
@@ -14,6 +20,7 @@ def _dfunc(_cols):
 
 
 ## 对列并行计算 cols为列名list
+cols = ['var1','var2','var3']
 nwork = len(cols)//CPUS
 result = Parallel(n_jobs=CPUS)(
     delayed(_dfunc)(sub_cols) for sub_cols in [cols[i:i+nwork] for i in range(0, len(cols), nwork)]
