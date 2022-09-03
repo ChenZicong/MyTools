@@ -4,9 +4,8 @@ from tqdm import tqdm
 from joblib import Parallel, delayed
 
 
-## 计算函数
+## 计算函数自定义
 def _dfunc(_cols):
-    ## processing ...
     sub_iv_dict = {}
     sub_df_dict = {}
     
