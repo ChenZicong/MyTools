@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import statsmodels.stats.outliers_influence import variance_inflation_factor
 
 # 共线性分析-CORR
