@@ -1,7 +1,7 @@
 import multiprocessing
 from sklearn import LogisticRegression
 
-# 交叉验证调参
+# 交叉验证调参C
 # 训练数据 train_x, train_y
 
 def gs_run(gs):
@@ -9,8 +9,9 @@ def gs_run(gs):
     return gs.best_params_, gs_best_score_
 
 results = []
-model
+model = LogisticRegression(penalty='l1', solver='saga')
 
+# 多线程计算
 pool = multiprocessing.Pool(5)
 for C in [0.1, 0.2, 0.3, 0.4, 0.5]:
     param = {"C": [C]}
