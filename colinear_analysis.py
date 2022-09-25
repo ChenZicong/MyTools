@@ -1,8 +1,10 @@
-import pyspark.mllib.stat as st
 import statsmodels.stats.outliers_influence import variance_inflation_factor
 
 # 共线性分析-CORR
-# corrsMatrix = st.Statistics.corr(trainDataWOE.select(iv_var_list).rdd.map(lambda row: [e for e in row]))
+# trainDataWOE为训练集woe编码数据, IV_dict为IV值字典
+# SPARK版本: 
+#   import pyspark.mllib.stat as st
+#   corrsMatrix = st.Statistics.corr(trainDataWOE.select(iv_var_list).rdd.map(lambda row: [e for e in row]))
 
 corrsMatrix = trainDataWOE[iv_var_list].corr(method='pearson').values
 del_var_list = []
@@ -20,7 +22,7 @@ select_var = [i for i in iv_var_list if i not in del_var_list]
 
 # 共线性分析-VIF
 
-X = np.matrix(trainDataWOE[select_var].toPandas())
+X = np.matrix(trainDataWOE[select_var])
 VIF_list = [variance_inflation_factor(X,i) for i in range(X.shape[1])]
 VIF_dict = {}
 for i, j in zip(select_var, VIF_list):
