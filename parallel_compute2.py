@@ -11,7 +11,7 @@ def gs_run(gs):
 results = []
 model = LogisticRegression(penalty='l1', solver='saga')
 
-# 多线程计算
+# 多进程计算
 pool = multiprocessing.Pool(5)
 for C in [0.1, 0.2, 0.3, 0.4, 0.5]:
     param = {"C": [C]}
