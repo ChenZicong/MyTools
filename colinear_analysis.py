@@ -28,3 +28,4 @@ VIF_dict = {}
 for i, j in zip(select_var, VIF_list):
      VIF_dict[i] = j
 sorted(VIF_dict.items(), key=lambda x: x[1], reverse=True)
+
