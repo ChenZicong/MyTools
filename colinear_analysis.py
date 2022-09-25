@@ -23,7 +23,6 @@ select_var = [i for i in iv_var_list if i not in del_var_list]
 
 
 # 共线性分析-VIF
-
 X = np.matrix(trainDataWOE[select_var])
 VIF_list = [variance_inflation_factor(X,i) for i in range(X.shape[1])]
 VIF_dict = {}
