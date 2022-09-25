@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import multiprocessing
 from sklearn import LogisticRegression
 
