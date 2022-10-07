@@ -48,7 +48,7 @@ def miss_bin(y):
 
 ## 快速分箱
 def qtl_bin(x, y):
-    _data = [_ for _ in zip(x, y, _np.isnan(x))]
+    _data = [_ for _ in zip(x, y, ~_np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
     _y = [_[1] for _ in _data if _[2] == 1]
     _n = np.arange(2, max(3, min(50, len(np.unique(_x))-1)))
@@ -64,4 +64,39 @@ def qtl_bin(x, y):
            if np.abs(round(l[3], 8)) == 1 and round(l[1], 8) > 0 and round(l[2], 8) < 1][0]
     return _l3
 
+    
+## isotonic regression
+def iso_bin(x, y):
+    _data = [_ for _ in zip(x, y, ~np.isnan(x))]
+    _x = [_[0] for _ in _data if _[2] == 1]
+    _y = [_[1] for _ in _data if _[2] == 1]
+    _cor = scipy.stats.spearmanr(_x, _y)[0]
+    _reg = IsotonicRegression()
+    _f = np.abs(_reg.fit_transform(_x, list(map(lambda y: y*_cor/np.abs(_cor), _y))))
+    
+    _l1 = sorted(list(zip(_f, _x, _y)), key=lambda x: x[0])
+    _l2 = [[l for l in _l1 if l[0] == f] for f in sorted(set(_f))]
+    _l3 = [[*set(_[0] for _ in l),
+            max(_[1] for _ in l),
+            np.mean([_[2] for _ in l]),
+            sum(_[2] for _ in l)] for l in _l2]
+    _c = sorted([_[1] for _ in [l for l in _l3 if l[2] < 1 and l[2] > 0 and l[3] > 1]])
+    _p = _c[1:-1] if len(_c) > 2 else _c[:-1]
+    return _p
+
+
+## kmean clustering
+def kmn_bin(x, y):
+    _data = [_ for _ in zip(x, y, ~np.isnan(x))]
+    _x = [_[0] for _ in _data if _[2] == 1]
+    _y = [_[1] for _ in _data if _[2] == 1]
+    _n = np.arange(2, max(3, min(50, len(np.unique(_x))-1)))
+    _m = [[np.median([_[0] for _ in _data if _[2] == 1 and _[1] == 1])],
+          [np.median([_[0] for _ in _data if _[2] == 1])]]
+    _c1 = [KMeans(n_clusters=_, random_state=1).fit(np.reshape(_x
+    
+    
+    
+    
+    
     
