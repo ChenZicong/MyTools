@@ -93,10 +93,19 @@ def kmn_bin(x, y):
     _n = np.arange(2, max(3, min(50, len(np.unique(_x))-1)))
     _m = [[np.median([_[0] for _ in _data if _[2] == 1 and _[1] == 1])],
           [np.median([_[0] for _ in _data if _[2] == 1])]]
-    _c1 = [KMeans(n_clusters=_, random_state=1).fit(np.reshape(_x
+    _c1 = [KMeans(n_clusters=_, random_state=1).fit(np.reshape(_x, [-1,1])).labels_ for _ in _n]
+    _c2 = [sorted(_l, key=lambda x: x[0]) for _l in [list(zip(_, x)) for _ in _c1]]
+    group = lambda x: [[_l for _l in x if _l[0] == _k] for _k in set([_[0] for _ in x])]
+    upper = lambda x: sorted([max([_2[1] for _2 in _1]) for _1 in x])
+    _c3 = list(set(tuple(upper(_2)[:-1]) for _2 in [group(_1) for _1 in _c2])) + _m
     
-    
-    
-    
-    
+    _l1 = [[_, manual_bin(_x, _y, _)] for _ in _c3]
+    _l2 = [[l[0],
+            min([_["bads"]/_["freq"] for _ in l[1]]),
+            max([_["bads"]/_["freq"] for _ in l[1]]),
+            scipy.stats.spearmanr([_["bin"] for _ in l[1]], [_["bads"]/_["freq"] for _ in l[1]])[0]
+           ] for l in _l1]
+    _l3 = [l[0] for l in sorted(_l2, key=lambda x: -len(x[0]))
+           if np.abs(round(l[3], 8))==1 and round(l[1], 8)>0 and round(l[2], 8)<1][0]
+    return _l3
     
