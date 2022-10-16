@@ -27,26 +27,8 @@ def manual_bin(x, y, cuts):
                               max([_[1] for _ in _2])])) for _1, _2 in _l2],
                     key=lambda x: x["bin"]))
 
-def miss_bin(y):
-    return ({"bin": 0, "freq": len([_ for _ in y]), "miss": len([_ for _ in y]),
-             "bads": sum([_ for _ in y]), "minx": np.nan, "maxx": np.nan})
-  
-# def add_miss(d, l):
-#     _l = l[:]
-#     if len([_ for _ in d if _[2] == 0]) > 0:
-#         _m = miss_bin(_[1] for _ in d if _[2] == 0])
-#         if _m["bads"] == 0:
-#             for _ in ["freq", "miss", "bads"]:
-#                 _l[0][_] = _l[0][_] + _m[_]
-#         elif _m["freq"] == _m["bads"]:
-#             for _ in ["freq", "miss", "bads"]:
-#                 _l[-1][_] = _l[-1][_] + _m[_]
-#         else:
-#             _l.append(_m)
-#     return (_l)
 
-
-## 快速分箱
+## quantile cut
 def qtl_bin(x, y):
     _data = [_ for _ in zip(x, y, ~_np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
@@ -110,7 +92,7 @@ def kmn_bin(x, y):
     return _l3
     
 
-## gradient boosting machine
+## gradient boosting
 def gbm_bin(x, y):
     _data = [_ for _ in zip(x, y, ~np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
@@ -131,3 +113,23 @@ def gbm_bin(x, y):
     _c = sorted([_[1] for _ in [l for l in _l3 if l[2] < 1 and l[2] > 0 and l[3] > 1]])
     _p = _c[1:-1] if len(_c) > 2 else _c[:-1]
     return _p
+
+
+
+# def miss_bin(y):
+#     return ({"bin": 0, "freq": len([_ for _ in y]), "miss": len([_ for _ in y]),
+#              "bads": sum([_ for _ in y]), "minx": np.nan, "maxx": np.nan})
+  
+# def add_miss(d, l):
+#     _l = l[:]
+#     if len([_ for _ in d if _[2] == 0]) > 0:
+#         _m = miss_bin(_[1] for _ in d if _[2] == 0])
+#         if _m["bads"] == 0:
+#             for _ in ["freq", "miss", "bads"]:
+#                 _l[0][_] = _l[0][_] + _m[_]
+#         elif _m["freq"] == _m["bads"]:
+#             for _ in ["freq", "miss", "bads"]:
+#                 _l[-1][_] = _l[-1][_] + _m[_]
+#         else:
+#             _l.append(_m)
+#     return (_l)
