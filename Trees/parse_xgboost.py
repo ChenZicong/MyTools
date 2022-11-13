@@ -1,5 +1,8 @@
 ## 解析XGBOOST模型文件，转为SQL
 
+import codecs
+import json
+
 def parse_xgb_tree_2sql(xgb_tree_json, mid_sqls, tree_num, depth=0):
     indent = "    " * (depth+1)
     if 'leaf' in xgb_tree_json.keys():
