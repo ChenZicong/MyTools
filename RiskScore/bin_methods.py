@@ -28,7 +28,7 @@ def manual_bin(x, y, cuts):
                     key=lambda x: x["bin"]))
 
 
-## quantile cut
+## method 1: quantile cut
 def qtl_bin(x, y):
     _data = [_ for _ in zip(x, y, ~_np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
@@ -47,7 +47,7 @@ def qtl_bin(x, y):
     return _l3
 
     
-## isotonic regression
+## method 2: isotonic regression
 def iso_bin(x, y):
     _data = [_ for _ in zip(x, y, ~np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
@@ -67,7 +67,7 @@ def iso_bin(x, y):
     return _p
 
 
-## kmean clustering
+## method 3: kmean clustering
 def kmn_bin(x, y):
     _data = [_ for _ in zip(x, y, ~np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
@@ -92,7 +92,7 @@ def kmn_bin(x, y):
     return _l3
     
 
-## gradient boosting
+## method 4: gradient boosting
 def gbm_bin(x, y):
     _data = [_ for _ in zip(x, y, ~np.isnan(x))]
     _x = [_[0] for _ in _data if _[2] == 1]
