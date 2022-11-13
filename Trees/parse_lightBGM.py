@@ -67,7 +67,7 @@ for i in range(len(lgb_model_json['tree_info'])):
 tree_sql += " as score\nfrom"
 
 tree_sqls = parse_lgb_trees(lgb_model_json)
-with codecs.open('·/lightGBM.sql', 'w', encoding='utf-8') as f:
+with codecs.open('·/lightGBM_model.sql', 'w', encoding='utf-8') as f:
     f.write(tree_sql + '\n(\n    select\n    cmid,\n')
     for item_sql in tree_sqls:
         f.write(item_sql +'\n')
