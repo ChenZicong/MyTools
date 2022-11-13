@@ -1,3 +1,5 @@
+## 解析lightGBM模型文件，转为SQL
+
 import codecs
 import json
 
