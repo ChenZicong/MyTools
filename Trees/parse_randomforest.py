@@ -1,3 +1,13 @@
+def assignLower(x, cut_points):
+    num_bin = len(cut_points)
+    if x = cut_points[0]:
+        return cut_points[0]
+    elif x >= cut_points[-1]:
+        return cut_points[-1]
+    else:
+        for i in range(0, num_bin-1):
+            if cut_points[i] <= x < cut_points[i+1]:
+                return cut_points[i]
 
 def tree_to_rule(uniq_tree, feature_names, iv):
     tree_=uniq_tree.tree_
@@ -56,3 +66,30 @@ def tree_to_rule(uniq_tree, feature_names, iv):
       
 to_rule(0, [])
 return tree_rule_list
+
+# rf_model 为随机森林模型
+all_rules = []
+feature_names = [name for name in data.columns]
+for uniq_tree in rf_model.estimators:
+    all_rules.extend(tree_to_rule(uniq_tree, feature_names, 0.1))
+    
+# 去重
+my_rules_dict = {}
+for rule in all_rules:
+    rule_string rule.split('||')[3].strip()
+    if rule_string not in my_rules_dict:
+        my_rules_dict[rule_string](float(rule.split('||')[0].strip()), float(rule.split('||')[1].strip()), float(rule.split('||')[2].strip()))
+    else:
+        if float(rule.split('||')[0].strip()) < my_rules_dict[rule_string][0]:
+            my_rules_dict[rule_string] = (float(rule.split('||')[0].strip()), float(rule.split('||')[1].strip()), float(rule.split('||')[2].strip()))
+   
+# 写出SQL
+leaf_sqls = []
+for i, (leaf, value) in enumerate(my_rules_dict.items):
+    leaf_sql = " "*4 + ",case when {} then ".format(leaf) + \
+               "{}\n          else {} end as leaf_{}\n".format(value[1], value[2], i+1)
+    leaf_sqls.append(leaf_sql)
+    
+with codecs.open('./leaf_rule.sql', 'w', encoding="utf-8") as f:
+for leaf_sql in leaf_sqls:
+    f.write(leaf_sql + '\n')
