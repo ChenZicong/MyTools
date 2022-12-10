@@ -1,3 +1,7 @@
+# coding: utf-8
+# @Author: ChenZicong
+# @Date: 20211230
+
 ## 解析XGBOOST模型文件，转为SQL
 
 import codecs
