@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import scipy
 import sklearn
 import tabulate
