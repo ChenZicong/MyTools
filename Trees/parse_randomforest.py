@@ -1,3 +1,7 @@
+# coding: utf-8
+# @Author: ChenZicong
+# @Date: 20211230
+
 def assignLower(x, cut_points):
     num_bin = len(cut_points)
     if x = cut_points[0]:
