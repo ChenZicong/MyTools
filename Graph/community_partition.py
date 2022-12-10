@@ -1,3 +1,7 @@
+# coding: utf-8
+# @Author: ChenZicong
+# @Date: 20211230
+
 import networkx
 from community import community_louvain
 
