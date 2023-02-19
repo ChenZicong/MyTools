@@ -30,7 +30,7 @@ data = data.withColumn('label_new',
 
 import pylift
 import seaborn
-from matplotlib import plot as plt
+from matplotlib import pyplot as plt
 
 data_pd = data.toPandas()
 
