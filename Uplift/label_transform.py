@@ -29,10 +29,25 @@ data = data.withColumn('label_new',
 
 
 import pylift
+import seaborn
+from matplotlib import plot as plt
+
 data_pd = data.toPandas()
+
+# cumulative gain chart
 up_eval = pylift.eval.UpliftEval(data_pd['class'], data_pd['label'], data_pd['pred'], n_bins=10)
 up_eval.plot('cgains')
+pylift.eval.get_scores(data_pd['class'], data_pd['label'], data_pd['pred'], p=0.5*len(data_pd))
 
-
-
+# uplift bar
+x, y = up_eval.calc(plot_type='uplift', n_bins=10)
+x = [round(v,1) for v in x]
+plt.subplots(figsize=(10,6))
+ax = seaborn.barplot(x, y, color='lightblue')
+ax.set_title('Uplift Bar')
+ax.set_xlabel('percentage')
+ax.set_ylabel('response uplit')
+ax.set_ylim(ymin=-0.09, ymax=0.15)
+plt.show()
+plt.close()
 
