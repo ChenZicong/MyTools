@@ -1,3 +1,6 @@
+# coding: utf-8
+# @Author: ChenZicong
+# @Date: 20211231
 
 # train_data_ts 为时间序列数据，6个通道，16个日期
 train_ts = train_data_ts.values.reshape((-1,6,16)
