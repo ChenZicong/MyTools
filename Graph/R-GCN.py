@@ -1,5 +1,9 @@
+import torch  
+import torch.nn as nn  
+import torch.nn.functional as F 
+
 # R-GCN
-class GraphConvolutionLayer(Module):
+class GraphConvolutionLayer(nn.Module):
     def __init__(self, in_features, out_features, activation, edge_type_num, dropout_rate=0.):
         super(GraphConvolutionLayer, self).__init__()
         self.edge_type_num = edge_type_num
